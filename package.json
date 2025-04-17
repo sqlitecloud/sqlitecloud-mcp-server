@@ -1,6 +1,6 @@
 {
-  "name": "model-context-protocol-server",
-  "version": "1.0.0",
+  "name": "@sqlitecloud/mcp-server",
+  "version": "0.0.1",
   "description": "",
   "main": "index.ts",
   "scripts": {
