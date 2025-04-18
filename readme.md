@@ -27,7 +27,7 @@ The MCP Server provides the following tools:
 To use the MCP Server, ensure you have a valid connection string for your SQLite Cloud database. The server can be started using the following command:
 
 ```bash
-node build/index.js --connectionString <your_connection_string>
+npx @sqlitecloud/mcp-server --connectionString <your_connection_string>
 ```
 
 Replace `<your_connection_string>` with the appropriate connection string for your SQLite Cloud project.
@@ -47,23 +47,82 @@ Replace `<your_connection_string>` with the appropriate connection string for yo
   "mcp": {
     "inputs": [],
     "servers": {
+      // local (for development)
       "sqlitecloud-mcp-server": {
         "type": "stdio",
         "command": "node",
         "args": [
-          "build/index.js",
+          "./build/index.ts",
           "--connectionString",
-          "<your_connection_string>"
+          "<CONNECTION_STRING>"
         ]
-      }
+      },
+      // via package manager
+      "sqlitecloud-mcp-server": {
+        "type": "stdio",
+        "command": "npx",
+        "args": [
+          "y"
+          "@sqlitecloud/mcp-server",
+          "--connectionString",
+          "<CONNECTION_STRING>"
+        ]
+      },
+      // SSE
+      "sqlitecloud-mcp-server-sse": {
+        "type": "sse",
+        "url": "<YOUR_NODE_ADDRESS>/v1/mcp/sse",
+        "headers": {
+          "Authorization": "Bearer <CONNECTION_STRING>"
+        }
+      },
     }
   }
 }
 ```
 
-# Build
+# Development
+
+## Build
 
 
 ```bash
 npm run build
 ```
+
+## Run
+Build the package and then run it:
+
+```bash
+node build/index.js --connectionString <CONNECTION_STRING>
+```
+
+## Locally test the package
+
+```bash
+npm pack
+```
+
+Then:
+```bash
+npx <PACKAGE_FILENAME>.tgz --connectionString <CONNECTION_STRING>
+```
+
+## Inspection
+Use the inspector to test both `stdio` and `sse` transports.
+First build the package then run:
+```bash
+npx npx @modelcontextprotocol/inspector@latest
+```
+and open it at the page: http://127.0.0.1:6274/
+
+### Stdio Transport
+- **Transport type**: `stdio`
+- **Command**: `npx`
+- **Arguments**: `<PATH_TO_PACKAGE_FOLDER>  --connectionString <CONNECTION_STRING>`
+
+_Note: use the `PATH_TO_PACKAGE_FOLDER` from your home directory or you might get permission errors_
+
+### SSE Transport
+To test `sse` transport to a remote or local server use  
+**URL**: `http://localhost:8090/v1/mcp/sse`

@@ -1,22 +1,25 @@
 {
   "name": "@sqlitecloud/mcp-server",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.ts",
+  "description": "Model Context Protocol server for SQLite Cloud database",
+  "author": "SQLite Cloud",
+  "homepage": "https://sqlitecloud.ai",
+  "repository": {
+    "url": "https://github.com/sqlitecloud/sqlitecloud-mcp-server",
+    "type": "git"
+  },
+  "bugs": "https://github.com/sqlitecloud/sqlitecloud-mcp-server/issues",
+  "keywords": [],
+  "main": "./build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc && chmod 755 build/index.js"
+    "build": "rm -rf build && tsc && chmod 755 build/index.js"
   },
   "type": "module",
-  "bin": {
-    "weather": "./build/index.js"
-  },
+  "bin": "./build/index.js",
   "files": [
     "build"
   ],
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.9.0",
     "@sqlitecloud/drivers": "^1.0.438",

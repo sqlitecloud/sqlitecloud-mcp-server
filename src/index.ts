@@ -1,11 +1,14 @@
+#!/usr/bin/env node
+
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { parseArgs } from "node:util";
 import { SQLiteCloudMcpServer } from "./server.js";
-import { SQLiteCloudMcpTransport } from "./transport.js";
+import { SQLiteCloudMcpTransport } from "./sqlitecloudTransport.js";
+import { parseArgs } from "util";
 
 const server = new SQLiteCloudMcpServer();
 
 async function main() {
+  console.log("Starting SQLite Cloud MCP Server...");
   const {
     values: { connectionString },
   } = parseArgs({

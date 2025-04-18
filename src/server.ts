@@ -1,6 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { SQLiteCloudMcpTransport } from "./transport.js";
+import { SQLiteCloudMcpTransport } from "./sqlitecloudTransport.js";
 
 export class SQLiteCloudMcpServer {
   private mcpServer: McpServer;
@@ -18,9 +18,6 @@ export class SQLiteCloudMcpServer {
     const mcpTransport = transport.mcpTransport;
     let sessionId = mcpTransport.sessionId;
     if (!sessionId) {
-      console.warn(
-        "Transport does not have a session ID. Using the anonymous session."
-      );
       sessionId = "anonymous";
       mcpTransport.sessionId = sessionId;
     }
