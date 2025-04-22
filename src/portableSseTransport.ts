@@ -57,7 +57,7 @@ export class PortableSSEServerTransport implements Transport {
   /**
    * Handle a client message, regardless of how it arrived. This can be used to inform the server of messages that arrive via a means different than HTTP POST.
    */
-  async handleMessage(message: unknown): Promise<void> {
+  async handleMessage(message: unknown, extra?: { authInfo?: AuthInfo }): Promise<void> {
     if (!this._sseWriter) {
       const message = 'SSE connection not established'
       throw new Error(message)
@@ -66,7 +66,7 @@ export class PortableSSEServerTransport implements Transport {
     let parsedMessage: JSONRPCMessage
     try {
       parsedMessage = JSONRPCMessageSchema.parse(message)
-      this.onmessage?.(parsedMessage)
+      this.onmessage?.(parsedMessage, extra)
     } catch (error) {
       this.onerror?.(error as Error)
       throw error

@@ -50,7 +50,7 @@ export class SQLiteCloudMcpServer {
         description: 'MCP Server for SQLite Cloud: https://sqlitecloud.io'
       },
       {
-        capabilities: { resources: {}, tools: {}, prompts: {} },
+        capabilities: { tools: {} },
         instructions: 'This server provides tools to interact with SQLite databases on SQLite Cloud, execute SQL queries, manage table schemas and analyze performance metrics.'
       }
     )
