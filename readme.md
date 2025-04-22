@@ -1,7 +1,7 @@
 # Model Context Protocol (MCP) Server for SQLite Cloud
 
 ## Overview
-The MCP Server for SQLite Cloud is designed to facilitate seamless interaction with SQLite Cloud databases. It leverages the Model Context Protocol (MCP) to provide an interface for executing queries, commands and analyzing query performance.
+The MCP Server for SQLite Cloud is designed to allow interaction with your SQLite Cloud databases using the AI Agent. It leverages the Model Context Protocol (MCP) to provide an interface for executing queries, commands and analyzing query performance.
 
 ## Features
 - **Execute Queries**: Run `SELECT`, `INSERT`, `UPDATE`, and `DELETE` SQL queries on SQLite Cloud databases.
@@ -32,13 +32,15 @@ npx @sqlitecloud/mcp-server --connectionString <your_connection_string>
 
 Replace `<your_connection_string>` with the appropriate connection string for your SQLite Cloud project.
 
-## Configure in your AI Agent
+## Configure your AI Agent
 
 ### VSCode
 
 [Official documentation](https://code.visualstudio.com/docs/copilot/chat/mcp-servers)
 
-1. **Locate the settings.json file**: Open `VSCode Settings` and search for `mcp`. Edit the `User`'s `settings.json`. _MCP requires your connection string and it's not safe to keep it into the project's VSCode settings._
+1. **Locate the settings.json file**: Open `VSCode Settings` and search for `mcp`. Edit the `User`'s `settings.json`. 
+
+> _MCP requires your connection string and it's not safe to keep it into the project's VSCode settings._
 
 2. **Add the MCP configuration**: Include the following configuration in the settings.json file:
 
@@ -112,7 +114,7 @@ npx <PACKAGE_FILENAME>.tgz --connectionString <CONNECTION_STRING>
 Use the inspector to test both `stdio` and `sse` transports.
 First build the package then run:
 ```bash
-npx npx @modelcontextprotocol/inspector@latest
+npx @modelcontextprotocol/inspector@latest
 ```
 and open it at the page: http://127.0.0.1:6274/
 
@@ -125,4 +127,4 @@ _Note: use the `PATH_TO_PACKAGE_FOLDER` from your home directory or you might ge
 
 ### SSE Transport
 To test `sse` transport to a remote or local server use  
-**URL**: `http://localhost:8090/v1/mcp/sse`
+- **URL**: `http://localhost:8090/v1/mcp/sse`

@@ -1,39 +1,34 @@
 #!/usr/bin/env node
 
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { SQLiteCloudMcpServer } from "./server.js";
-import { SQLiteCloudMcpTransport } from "./sqlitecloudTransport.js";
-import { parseArgs } from "util";
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
+import { SQLiteCloudMcpServer } from './server.js'
+import { SQLiteCloudMcpTransport } from './sqlitecloudTransport.js'
+import { parseArgs } from 'util'
 
-const server = new SQLiteCloudMcpServer();
+const server = new SQLiteCloudMcpServer()
 
 async function main() {
-  console.log("Starting SQLite Cloud MCP Server...");
+  console.log('Starting SQLite Cloud MCP Server...')
   const {
-    values: { connectionString },
+    values: { connectionString }
   } = parseArgs({
     options: {
       connectionString: {
-        type: "string",
-      },
-    },
-  });
+        type: 'string'
+      }
+    }
+  })
 
   if (!connectionString) {
-    throw new Error(
-      "Please provide a Connection String with the --connectionString flag"
-    );
+    throw new Error('Please provide a Connection String with the --connectionString flag')
   }
 
-  const transport = new SQLiteCloudMcpTransport(
-    connectionString,
-    new StdioServerTransport()
-  );
-  await server.connect(transport);
-  console.info("SQLite Cloud MCP Server running on stdio");
+  const transport = new SQLiteCloudMcpTransport(connectionString, new StdioServerTransport())
+  await server.connect(transport)
+  console.info('SQLite Cloud MCP Server running on stdio')
 }
 
-main().catch((error) => {
-  console.error("Fatal error in main():", error);
-  process.exit(1);
-});
+main().catch(error => {
+  console.error('Fatal error in main():', error)
+  process.exit(1)
+})

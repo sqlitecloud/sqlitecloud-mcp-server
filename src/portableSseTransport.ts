@@ -10,7 +10,7 @@ interface PortableWriter {
 
 /**
  * Server transport for SSE to send messages over an SSE connection.
- * 
+ *
  * This is a reimplementation of the `SSEServerTransport` class from `@modelcontextprotocol/sdk/server/see`
  * without the dependency with ExpressJS.
  */
@@ -25,10 +25,7 @@ export class PortableSSEServerTransport implements Transport {
   /**
    * Creates a new SSE server transport, which will direct the client to POST messages to the relative or absolute URL identified by `_endpoint`.
    */
-  constructor(
-    private _endpoint: string,
-    private writableStream: PortableWriter
-  ) {
+  constructor(private _endpoint: string, private writableStream: PortableWriter) {
     this._sessionId = randomUUID()
   }
 
