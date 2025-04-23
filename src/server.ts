@@ -42,6 +42,28 @@ export class SQLiteCloudMcpServer {
     return transport
   }
 
+  addCustomTool(
+    name: string,
+    description: string,
+    parameters: z.ZodRawShape,
+    handler: (parameters: any, transport: SQLiteCloudMcpTransport) => Promise<any>
+  ): void {    
+    // TODO: keep a registered list of tools to check existence and to implement removal
+    this.mcpServer.tool(name, description, parameters, async (parameters, extra) => {
+      if (!extra.sessionId) { 
+        throw new Error('Session ID is required')
+      }
+
+      const customerResult = await handler(parameters, this.getTransport(extra.sessionId))
+  
+      return { content: [{ type: 'text', text: JSON.stringify(customerResult) }] }
+    })
+  }
+
+  removeCustomTool(name: string): void {
+    throw new Error('Not implemented')
+  }
+
   private initializeServer(): McpServer {
     return new McpServer(
       {
