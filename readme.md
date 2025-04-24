@@ -1,18 +1,22 @@
 # Model Context Protocol (MCP) Server for SQLite Cloud
+
 > _This project is currently in the experimental phase. Feel free to explore, report issues, and share your feedback._
 
 ![mcp-demonstration](https://private-user-images.githubusercontent.com/6153996/436944588-e374f8f0-1bc6-4079-ae3e-21bfe842c412.gif)
 
 ## Overview
-The MCP Server for SQLite Cloud enables seamless interaction with SQLite Cloud databases using the AI Agent. It utilizes the Model Context Protocol (MCP) to provide tools for executing queries, managing schemas, and analyzing query performance.
+
+The MCP Server for SQLite Cloud enables seamless interaction with SQLite Cloud databases using the AI models. It utilizes the Model Context Protocol (MCP) to provide tools for executing queries, managing schemas, and analyzing query performance.
 
 ## Features
+
 - **Query Execution**: Perform `SELECT`, `INSERT`, `UPDATE`, and `DELETE` SQL operations on SQLite Cloud databases.
 - **Schema Management**: Create tables, list existing ones, and retrieve schema details.
 - **Command Execution**: Run predefined commands supported by SQLite Cloud.
 - **Performance Analysis**: Identify slow queries, analyze query plans, and reset query statistics.
 
 ## Tools
+
 The MCP Server offers the following tools:
 
 1. **read-query**: Perform `SELECT` queries and fetch results.
@@ -27,7 +31,8 @@ The MCP Server offers the following tools:
 10. **analyzer-reset**: Reset query statistics for specific queries, groups, or databases.
 
 ## Getting Started
-To use the MCP Server, create a [free account on SQLite Cloud](https://sqlitecloud.io) and get your _Connection String_.   
+
+To use the MCP Server, create a [free account on SQLite Cloud](https://sqlitecloud.io) and get your _Connection String_.  
 Start the server with the following command:
 
 ```bash
@@ -36,13 +41,14 @@ npx @sqlitecloud/mcp-server --connectionString <your_connection_string>
 
 Replace `<your_connection_string>` with your SQLite Cloud connection string.
 
-## Configure Your AI Agent
+## Configure Your AI model
 
 ### Requirements
 
 Ensure Node.js is installed on your machine with:
+
 ```bash
-node -v
+node --version
 ```
 
 If Node.js is not installed, you can download it from [nodejs.org](https://nodejs.org/).
@@ -51,44 +57,46 @@ If Node.js is not installed, you can download it from [nodejs.org](https://nodej
 
 Refer to the [official documentation](https://code.visualstudio.com/docs/copilot/chat/mcp-servers) for detailed instructions.
 
-1. **Edit `settings.json`**: Open VSCode settings and search for `mcp`. Modify the `User`'s `settings.json` file.
+1. In the root of your project create the file `.vscode/mcp.json`
 
-> _Note: Avoid storing your connection string in the project's VSCode settings for security reasons._
-
-2. **Add MCP Configuration**: Include the following in `settings.json`:
+2. Add the following configuration (choose the server configuration you prefer):
 
 ```json
 {
   "mcp": {
-    "inputs": [],
+    "inputs": [
+     {
+       "type": "promptString",
+       "id": "sqlitecloud-connection-string",
+       "description": "Set the SQLite Cloud Connection String",
+       "password": true
+     }
+    ],
     "servers": {
-      // local (for development)
-      "sqlitecloud-mcp-server": {
+      "sqlitecloud-mcp-server-dev": {
         "type": "stdio",
         "command": "node",
         "args": [
           "./build/index.js",
           "--connectionString",
-          "<CONNECTION_STRING>"
+          "${input:sqlitecloud-connection-string}"
         ]
       },
-      // via package manager
       "sqlitecloud-mcp-server": {
         "type": "stdio",
         "command": "npx",
         "args": [
-          "-y"
+          "-y",
           "@sqlitecloud/mcp-server",
           "--connectionString",
-          "<CONNECTION_STRING>"
+          "${input:sqlitecloud-connection-string}"
         ]
       },
-      // SSE
       "sqlitecloud-mcp-server-sse": {
         "type": "sse",
         "url": "<YOUR_NODE_ADDRESS>/v1/mcp/sse",
         "headers": {
-          "Authorization": "Bearer <CONNECTION_STRING>"
+          "Authorization": "Bearer ${input:sqlitecloud-connection-string}"
         }
       }
     }
@@ -105,6 +113,7 @@ npm run build
 ```
 
 ### Run
+
 After building the package, run it with:
 
 ```bash
@@ -128,6 +137,7 @@ npx <PACKAGE_FILENAME>.tgz --connectionString <CONNECTION_STRING>
 ```
 
 ### Inspection
+
 Use the inspector to test `stdio` and `sse` transports. First, build the package, then run:
 
 ```bash
@@ -137,6 +147,7 @@ npx @modelcontextprotocol/inspector@latest
 Access the inspector at: [http://127.0.0.1:6274/](http://127.0.0.1:6274/)
 
 #### Stdio Transport
+
 - **Transport Type**: `stdio`
 - **Command**: `npx`
 - **Arguments**: `<PATH_TO_PACKAGE_FOLDER> --connectionString <CONNECTION_STRING>`
@@ -144,5 +155,7 @@ Access the inspector at: [http://127.0.0.1:6274/](http://127.0.0.1:6274/)
 _Note: Use the `PATH_TO_PACKAGE_FOLDER` from your home directory to avoid permission issues._
 
 #### SSE Transport
+
 To test `sse` transport with a remote or local server:
+
 - **URL**: `http://localhost:8090/v1/mcp/sse`

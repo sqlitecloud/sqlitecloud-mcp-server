@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Model Context Protocol server for SQLite Cloud database",
   "author": "SQLite Cloud",
-  "homepage": "https://sqlitecloud.io/ai",
+  "homepage": "https://sqlite.ai",
   "repository": {
     "url": "https://github.com/sqlitecloud/sqlitecloud-mcp-server",
     "type": "git"
