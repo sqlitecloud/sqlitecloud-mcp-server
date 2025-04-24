@@ -1,48 +1,61 @@
 # Model Context Protocol (MCP) Server for SQLite Cloud
+> _This project is currently in the experimental phase. Feel free to explore, report issues, and share your feedback._
+
+![mcp-demonstration](https://private-user-images.githubusercontent.com/6153996/436944588-e374f8f0-1bc6-4079-ae3e-21bfe842c412.gif)
 
 ## Overview
-The MCP Server for SQLite Cloud is designed to allow interaction with your SQLite Cloud databases using the AI Agent. It leverages the Model Context Protocol (MCP) to provide an interface for executing queries, commands and analyzing query performance.
+The MCP Server for SQLite Cloud enables seamless interaction with SQLite Cloud databases using the AI Agent. It utilizes the Model Context Protocol (MCP) to provide tools for executing queries, managing schemas, and analyzing query performance.
 
 ## Features
-- **Execute Queries**: Run `SELECT`, `INSERT`, `UPDATE`, and `DELETE` SQL queries on SQLite Cloud databases.
-- **Schema Management**: Create new tables, list existing tables, and retrieve schema information for specific tables.
-- **Command Execution**: Execute predefined commands supported by SQLite Cloud.
-- **Performance Analysis**: Analyze the slowest queries, gather information about query plans, and reset query statistics.
+- **Query Execution**: Perform `SELECT`, `INSERT`, `UPDATE`, and `DELETE` SQL operations on SQLite Cloud databases.
+- **Schema Management**: Create tables, list existing ones, and retrieve schema details.
+- **Command Execution**: Run predefined commands supported by SQLite Cloud.
+- **Performance Analysis**: Identify slow queries, analyze query plans, and reset query statistics.
 
 ## Tools
-The MCP Server provides the following tools:
+The MCP Server offers the following tools:
 
-1. **read-query**: Execute `SELECT` queries and retrieve results.
-2. **write-query**: Execute `INSERT`, `UPDATE`, or `DELETE` queries.
-3. **create-table**: Create new tables in the database.
-4. **list-tables**: List all tables in the database.
-5. **describe-table**: Retrieve schema information for a specific table.
-6. **list-commands**: List all available commands and fetch external documentation.
-7. **execute-command**: Execute commands listed in the `list-commands` tool.
-8. **list-analyzer**: Analyze the slowest queries with optional filters.
-9. **analyzer-plan-id**: Gather information about query plans and indexes.
+1. **read-query**: Perform `SELECT` queries and fetch results.
+2. **write-query**: Perform `INSERT`, `UPDATE`, or `DELETE` operations.
+3. **create-table**: Create new database tables.
+4. **list-tables**: Display all tables in the database.
+5. **describe-table**: Retrieve schema details for a specific table.
+6. **list-commands**: List available commands and access external documentation.
+7. **execute-command**: Run commands from the `list-commands` tool.
+8. **list-analyzer**: Analyze slow queries with optional filters.
+9. **analyzer-plan-id**: Gather details about query plans and indexes.
 10. **analyzer-reset**: Reset query statistics for specific queries, groups, or databases.
 
 ## Getting Started
-To use the MCP Server, ensure you have a valid connection string for your SQLite Cloud database. The server can be started using the following command:
+To use the MCP Server, create a [free account on SQLite Cloud](https://sqlitecloud.io) and get your _Connection String_.   
+Start the server with the following command:
 
 ```bash
 npx @sqlitecloud/mcp-server --connectionString <your_connection_string>
 ```
 
-Replace `<your_connection_string>` with the appropriate connection string for your SQLite Cloud project.
+Replace `<your_connection_string>` with your SQLite Cloud connection string.
 
-## Configure your AI Agent
+## Configure Your AI Agent
 
-### VSCode
+### Requirements
 
-[Official documentation](https://code.visualstudio.com/docs/copilot/chat/mcp-servers)
+Ensure Node.js is installed on your machine with:
+```bash
+node -v
+```
 
-1. **Locate the settings.json file**: Open `VSCode Settings` and search for `mcp`. Edit the `User`'s `settings.json`. 
+If Node.js is not installed, you can download it from [nodejs.org](https://nodejs.org/).
 
-> _MCP requires your connection string and it's not safe to keep it into the project's VSCode settings._
+### VSCode Integration
 
-2. **Add the MCP configuration**: Include the following configuration in the settings.json file:
+Refer to the [official documentation](https://code.visualstudio.com/docs/copilot/chat/mcp-servers) for detailed instructions.
+
+1. **Edit `settings.json`**: Open VSCode settings and search for `mcp`. Modify the `User`'s `settings.json` file.
+
+> _Note: Avoid storing your connection string in the project's VSCode settings for security reasons._
+
+2. **Add MCP Configuration**: Include the following in `settings.json`:
 
 ```json
 {
@@ -54,7 +67,7 @@ Replace `<your_connection_string>` with the appropriate connection string for yo
         "type": "stdio",
         "command": "node",
         "args": [
-          "./build/index.ts",
+          "./build/index.js",
           "--connectionString",
           "<CONNECTION_STRING>"
         ]
@@ -64,7 +77,7 @@ Replace `<your_connection_string>` with the appropriate connection string for yo
         "type": "stdio",
         "command": "npx",
         "args": [
-          "y"
+          "-y"
           "@sqlitecloud/mcp-server",
           "--connectionString",
           "<CONNECTION_STRING>"
@@ -77,54 +90,59 @@ Replace `<your_connection_string>` with the appropriate connection string for yo
         "headers": {
           "Authorization": "Bearer <CONNECTION_STRING>"
         }
-      },
+      }
     }
   }
 }
 ```
 
-# Development
+## Development
 
-## Build
-
+### Build
 
 ```bash
 npm run build
 ```
 
-## Run
-Build the package and then run it:
+### Run
+After building the package, run it with:
 
 ```bash
 node build/index.js --connectionString <CONNECTION_STRING>
 ```
 
-## Locally test the package
+### Local Testing
+
+To locally test the package:
+
+1. Pack the package:
 
 ```bash
 npm pack
 ```
 
-Then:
+2. Run the packed file:
+
 ```bash
 npx <PACKAGE_FILENAME>.tgz --connectionString <CONNECTION_STRING>
 ```
 
-## Inspection
-Use the inspector to test both `stdio` and `sse` transports.
-First build the package then run:
+### Inspection
+Use the inspector to test `stdio` and `sse` transports. First, build the package, then run:
+
 ```bash
 npx @modelcontextprotocol/inspector@latest
 ```
-and open it at the page: http://127.0.0.1:6274/
 
-### Stdio Transport
-- **Transport type**: `stdio`
+Access the inspector at: [http://127.0.0.1:6274/](http://127.0.0.1:6274/)
+
+#### Stdio Transport
+- **Transport Type**: `stdio`
 - **Command**: `npx`
-- **Arguments**: `<PATH_TO_PACKAGE_FOLDER>  --connectionString <CONNECTION_STRING>`
+- **Arguments**: `<PATH_TO_PACKAGE_FOLDER> --connectionString <CONNECTION_STRING>`
 
-_Note: use the `PATH_TO_PACKAGE_FOLDER` from your home directory or you might get permission errors_
+_Note: Use the `PATH_TO_PACKAGE_FOLDER` from your home directory to avoid permission issues._
 
-### SSE Transport
-To test `sse` transport to a remote or local server use  
+#### SSE Transport
+To test `sse` transport with a remote or local server:
 - **URL**: `http://localhost:8090/v1/mcp/sse`

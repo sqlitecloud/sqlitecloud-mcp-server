@@ -86,7 +86,6 @@ export class SQLiteCloudMcpServer {
         query: z.string().describe('SELECT SQL query to execute')
       },
       async ({ query }, extra) => {
-        // console.log("Executing read-query with query:", query, "and parameters:", parameters);
         if (!query.trim().toUpperCase().startsWith('SELECT')) {
           throw new Error('Only SELECT queries are allowed for read-query')
         }
@@ -107,7 +106,6 @@ export class SQLiteCloudMcpServer {
         query: z.string().describe('SELECT SQL query to execute')
       },
       async ({ query }, extra) => {
-        // console.log("Executing write-query with query:", query, "and parameters:", parameters);
         if (query.trim().toUpperCase().startsWith('SELECT')) {
           throw new Error('SELECT queries are not allowed for write_query')
         }

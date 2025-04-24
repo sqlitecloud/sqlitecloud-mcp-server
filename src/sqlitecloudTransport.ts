@@ -9,8 +9,6 @@ export class SQLiteCloudMcpTransport {
       if (err) {
         console.error('Error opening database:', err)
         throw err
-      } else {
-        console.info('Database connected')
       }
     })
   }

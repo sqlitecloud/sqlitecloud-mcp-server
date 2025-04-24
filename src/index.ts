@@ -8,7 +8,7 @@ import { parseArgs } from 'util'
 const server = new SQLiteCloudMcpServer()
 
 async function main() {
-  console.log('Starting SQLite Cloud MCP Server...')
+  // console.debug('Starting SQLite Cloud MCP Server...')
   const {
     values: { connectionString }
   } = parseArgs({
@@ -25,7 +25,7 @@ async function main() {
 
   const transport = new SQLiteCloudMcpTransport(connectionString, new StdioServerTransport())
   await server.connect(transport)
-  console.info('SQLite Cloud MCP Server running on stdio')
+  // console.debug('SQLite Cloud MCP Server running on stdio')
 }
 
 main().catch(error => {
