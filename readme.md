@@ -2,7 +2,7 @@
 
 > _This project is currently in the experimental phase. Feel free to explore, report issues, and share your feedback._
 
-![mcp-demonstration](https://private-user-images.githubusercontent.com/6153996/436944588-e374f8f0-1bc6-4079-ae3e-21bfe842c412.gif)
+![mcp-demostration](https://github.com/user-attachments/assets/b34b2a68-ccd3-4ce6-a260-e0df6e994b79)
 
 ## Overview
 
