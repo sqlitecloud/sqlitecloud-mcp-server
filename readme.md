@@ -117,7 +117,7 @@ npm run build
 After building the package, run it with:
 
 ```bash
-node build/index.js --connectionString <CONNECTION_STRING>
+node disk/main.js --connectionString <CONNECTION_STRING>
 ```
 
 ### Local Testing
@@ -150,7 +150,7 @@ Access the inspector at: [http://127.0.0.1:6274/](http://127.0.0.1:6274/)
 
 - **Transport Type**: `stdio`
 - **Command**: `npx`
-- **Arguments**: `<PATH_TO_PACKAGE_FOLDER> --connectionString <CONNECTION_STRING>`
+- **Arguments**: `~/<PATH_TO_PACKAGE_FOLDER> --connectionString <CONNECTION_STRING>`
 
 _Note: Use the `PATH_TO_PACKAGE_FOLDER` from your home directory to avoid permission issues._
 
