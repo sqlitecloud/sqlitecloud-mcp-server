@@ -117,7 +117,7 @@ npm run build
 After building the package, run it with:
 
 ```bash
-node disk/main.js --connectionString <CONNECTION_STRING>
+node dist/main.js --connectionString <CONNECTION_STRING>
 ```
 
 ### Local Testing
